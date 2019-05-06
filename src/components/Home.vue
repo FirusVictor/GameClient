@@ -43,16 +43,9 @@ export default {
   },
   methods: {
     Logout: function () {
-      console.log(this.token)
-      axios.post('//localhost:3000/logout',
-        {
-          token: this.token
-        }).then(response => {
-        if (response.data.status) {
-          localStorage.removeItem('token')
-          this.$router.push({name: 'Auth'})
-        }
-      })
+      this.$socket.emit('exit')
+      localStorage.removeItem('token')
+      this.$router.push({name: 'Auth'})
     },
     Join: function () {
       this.$socket.emit('join', {token: this.token})
